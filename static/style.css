@@ -1,0 +1,26 @@
+/* Sophia Fondell
+sfondell@bu.edu
+CS 460: PA 1 - Photoshare
+CSS file that handles presentation and style of the web page */
+
+body {
+	background-color: #00FF00;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+img {
+	max-height: 250px;
+    width: auto;
+}
+
+.tags span {
+    display: inline-block;
+}
+
+.likes span {
+	display: inline-block;
+}
+
+.options span {
+	display: inline-block;
+}
