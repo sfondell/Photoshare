@@ -1,0 +1,11 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<head>
+	<title>Query results</title>
+</head>
+<h3>Results of search for "{{query}}"</h3>
+	<ul>
+		{% for (userid, fname, lname, email) in results %}
+			<li><a href='/{{userid}}/usrprofile'>{{fname}} {{lname}} - {{email}}</a></li>
+		{% endfor %}
+	</ul>
+<p> Back to your <a href='/profile'>profile</a></p>

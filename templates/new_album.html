@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<head>
+	<title>New Album</title>
+</head>
+	<body>
+		<div class="title">
+			<h1>Create a new Album</h1>
+		</div>
+			<form method="post" enctype="multipart/form-data" action="/new_album">
+				<label for="name">Album name:</label>
+				<input type="text" name="name" required='true' /><br />
+				<input type="submit" value="Create" />
+			</form>
+	</body>
+<p> Discard changes and go back to your <a href='/profile'>profile</a></p>

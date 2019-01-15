@@ -1,0 +1,30 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<head>
+	<title>Photoshare</title>
+</head>
+<h1>{{fname}} {{lname}}'s Profile</h1>
+
+<img src='data:image/png;base64, {{profpic}}'/>
+
+{% if (bio != None) and (bio != 'NULL') %}
+<p>Bio: {{bio}}</p>
+{% endif %}
+
+{% if (gender != None) and (gender != 'NULL') %}
+<p>Gender: {{gender}}</p>
+{% endif %}
+
+{% if (hometown != None) and (hometown != 'NULL') %}
+<p>From {{hometown}}</p>
+{% endif %}
+
+<ul>
+<li><a href='{{userid}}/usralbums'>View {{fname}}'s albums</a></li>
+<li><a href='/browseusers'>Browse all users</a></li> 
+<li><a href='/logout'>Logout</a></li>
+<li><a href='/'>Home</a></li>
+</ul>
+
+<p> Back to your <a href='/profile'>profile</a></p>
+

@@ -1,0 +1,130 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<h2>{{albumName}} by {{user}}</h2>
+{% if (own == curruser) %}
+	<form action="" enctype="multipart/form-data" method="POST">
+		<div class="form group">
+			<input type="hidden" name="action" value="deletealbum">
+		</div>
+
+		<div class="form group">
+			<input type="submit" value="Delete Album" />
+		</div>
+	</form>
+{% endif %}
+<ul>
+	{% for (photoid, albumid, userid, data, caption, numlikes, users, comments, tags) in photos %}
+		{% if (own == curruser) %}
+		<img src='data:image/png;base64, {{data}}'/><br>
+		<div class="options">
+				<span><form action="" enctype="multipart/form-data" method="POST">
+					<div class="form group">
+						<input type="hidden" name="action" value="deletephoto">
+					</div>
+
+					<div class="form group">
+						<input type="hidden" name="photoid" value="{{photoid}}">
+					</div>
+
+					<span><div class="form group">
+						<input type="submit" value="Delete Photo" />
+					</div></span>
+				</form></span>
+
+				<span><form action="" enctype="multipart/form-data" method="POST">
+					<div class="form group">
+						<input type="hidden" name="photoid" value="{{photoid}}">
+					</div>
+
+					<div class="form group">
+						<input type="hidden" name="action" value="edittags">
+					</div>
+
+					<div class="form group">
+						<input type="submit" value="Edit tags" />
+					</div>
+				</form></span>
+		</div>
+			{{caption}}
+		{% else %}
+			<img src='data:image/png;base64, {{data}}'/><br>
+			{{caption}}
+		{% endif %}
+
+		<div class="tags">
+		<font color="purple">
+		{% for tag in tags %}
+			<span>#{{tag}} </span>
+		{% endfor %}
+		</font>
+		</div>
+
+		<div class="likes">
+			<span>{{numlikes}} <img src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-128.png" width="15" height="15"></span>
+			{% if loggedin and (curruser != 100) %}
+				<span><form action="" enctype="multipart/form-data" method="POST">
+					<div class="form group">
+						<input type="hidden" name="curruser" value="{{curruser}}">
+					</div>
+
+					<div class="form group">
+						<input type="hidden" name="photoid" value="{{photoid}}">
+					</div>
+
+					<div class="form group">
+						<input type="hidden" name="action" value="like">
+					</div>
+
+					<input type="submit" value="Like" />
+				</form></span>
+			{% endif %}
+		</div>
+
+		{% for (userid, email) in users %}
+			<p><font size="2" color="red"><a href='/{{userid}}/usrprofile'>{{email}}</a> likes this photo</font></p>
+		{% else %}
+			<p><font size="2" color="red">No users to display</font></p>
+		{% endfor %}
+
+		{% for (commentid, userid, commenttext, posttime, email) in comments %}
+			{% if userid == 100 %}
+				<p>Anonymous at {{posttime}}:
+					<font color="blue">{{commenttext}}</font></p>
+			{% else %}
+				<p><a href='/{{userid}}/usrprofile'>{{email}}</a> at {{posttime}}: 
+					<font color="blue">{{commenttext}}</font></p>
+			{% endif %}
+		{% else %}
+			<p>No comments to display</p>
+		{% endfor %}
+
+		{% if (own != curruser) %}
+			<form action="" enctype="multipart/form-data" method="POST">
+				<div class="form group">
+					<textarea name="commenttext" rows="1" cols="60"></textarea>
+				</div>
+
+				<div class="form group">
+					<input type="hidden" name="curruser" value="{{curruser}}">
+				</div>
+
+				<div class="form group">
+					<input type="hidden" name="photoid" value="{{photoid}}">
+				</div>
+
+				<div class="form group">
+					<input type="hidden" name="albumid" value="{{albumid}}">
+				</div>
+
+				<div class="form group">
+					<input type="hidden" name="action" value="comment">
+				</div><br>
+
+				<input type="submit" value="Comment" />
+			</form>
+		{% endif %}
+
+	{% else %}
+		<p>No photos to display</p>
+	{% endfor %}
+</ul>
+<p> Back to your <a href='/profile'>profile</a></p>

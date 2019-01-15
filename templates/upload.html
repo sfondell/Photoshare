@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<head>
+    <title>Upload a photo!</title>
+</head>
+    <body>
+        <div class="title">
+            <h1>Upload a photo to Photoshare</h1>
+        </div>
+            <form method="POST" enctype="multipart/form-data" action="/upload">
+                <label for="photo">Select photo:</label>
+                <input type="file" name="photo" required='true' /><br />
+                <label for="caption">Please caption:</label>
+                <input type="text" name="caption" required='true' /><br />
+                <label for="album">Choose an album to add to:</label>
+                <select class="album-selection" id="album" name="album">
+                    {% for (albumid, userid, creation, name) in albums %}
+                        <option value={{albumid}}>{{name}}</option>
+                    {% endfor %}
+                </select><br>
+                <input type="submit" value="Upload" />
+            </form>
+    </body>
+<p> Back to your <a href='/profile'>profile</a></p>
